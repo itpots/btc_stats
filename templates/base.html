@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+          crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}"/>
+    <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+    <script src="{{ url_for('static', filename='js/bootstrap.js') }}"></script>
+    <title>{{ title }}</title>
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand">
+                <img src="{{ url_for('static', filename='img/btc_icon.png') }}" alt="Иконка биткоина">
+            </a>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" id="navbar_Dropdown">
+                        Статистика
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbar_Dropdown">
+                        <a class="dropdown-item" href="/stats/btc">Курс биткоина</a>
+                        <a class="dropdown-item" href="/stats/eth">Курс эфириума</a>
+                        <a class="dropdown-item" href="/stats/ltc">Курс лайткоина</a>
+                        <a class="dropdown-item" href="/stats/coins">Курсы криптовалют</a>
+                    </div>
+                </div>
+                {% if current_user.is_authenticated %}
+                    <div class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" id="navbarDropdown">
+                            Кабинет
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="/account">Профиль</a>
+                            <a class="dropdown-item" href="/payeer_account">Payeer</a>
+                            <a class="dropdown-item" href="/payment_system">Платёжная система</a>
+                        </div>
+                    </div>
+                {% endif %}
+                {% block navbar %}{% endblock %}
+            </div>
+        </div>
+        {% if current_user.is_authenticated %}
+            {% if balance %}
+                <a class="navbar-brand">
+                    Ваш баланс: {{ balance }}
+                </a>
+            {% endif %}
+            <a class="btn btn-outline-primary" href="/logout">Выйти</a>
+        {% else %}
+            <a class="btn btn-outline-primary" href="/login">Войти</a>
+            <a class="btn btn-outline-success" href="/register">Зарегистрироваться</a>
+        {% endif %}
+    </nav>
+</header>
+<main role="main" class="container">
+    {% block content %}{% endblock %}
+</main>
+</body>
+</html>

@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid">
+    <form class="add_payeer" action="" method="post">
+        <h2>Подключение платёжной системы</h2><hr style="height:2 px; background: #98a0a5;">
+        {{ form.hidden_tag() }}
+        <div class="container">
+            <p>
+                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#rule_modal">
+                    Соглашение на использование платёжной системы
+                </button>
+            </p>
+            <p>
+                {{ form.apiid.label }}<br>
+                {{ form.apiid(class="form-control") }}<br>
+                {% for error in form.apiid.errors %}
+                     <p class="alert alert-danger" role="alert">
+                        {{ error }}
+                     </p>
+                {% endfor %}
+            </p>
+            <p>
+                {{ form.apipass.label }}<br>
+                {{ form.apipass(class="form-control") }}<br>
+                {% for error in form.apipass.errors %}
+                     <p class="alert alert-danger" role="alert">
+                        {{ error }}
+                     </p>
+                {% endfor %}
+            </p>
+            <p>{{ form.approval() }} {{ form.approval.label }}</p>
+            <p>{{ form.submit(type="submit", class="btn btn-outline-primary") }}</p>
+            <div>{{ message }}</div>
+        </div>
+    </form>
+</div>
+<div class="modal fade" id="rule_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="rule_modalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="rule_modalLabel">Соглашение на использование платёжной системы</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+      </div>
+      <div class="modal-body">
+          <p>Отправляя свои api_id и api_pass, Вы осознаёте возможные риски утери финансов. Вы можете отключить эту функцию в любой момент.</p>
+          <a class="link" href="https://payeer.com/ru/account/?tab=api" target="_blank">Api_id и api_pass можно получить здесь.</a>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Принять</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

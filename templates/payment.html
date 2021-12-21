@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid">
+    <form class="payment_form" action="" method="post">
+        <h2>Перевод внутри системы Payeer</h2>
+        <a class="link" href="/delete_payment">Отключить платёжную систему</a><hr style="height:2 px; background: #98a0a5;">
+        {{ form.hidden_tag() }}
+        <div class="container">
+            {% if balance %}
+                <h5>Ваш баланс:</h5>
+                <h5> {{ balance }}</h5>
+            {% endif %}
+            <p>
+                {{ form.currency.label }}<br>
+                {{ form.currency(class="form-control") }}<br>
+                {% for error in form.currency.errors %}
+                    <p class="alert alert-danger" role="alert">
+                        {{ error }}
+                    </p>
+                {% endfor %}
+            </p>
+            <p>
+                {{ form.summ.label }}<br>
+                {{ form.summ(class="form-control") }}<br>
+                {% for error in form.summ.errors %}
+                    <p class="alert alert-danger" role="alert">
+                        {{ error }}
+                    </p>
+                {% endfor %}
+            </p>
+            <p>
+                {{ form.to.label }}<br>
+                {{ form.to(class="form-control") }}<br>
+                {% for error in form.to.errors %}
+                    <p class="alert alert-danger" role="alert">
+                        {{ error }}
+                    </p>
+                {% endfor %}
+            </p>
+            <p>
+                {{ form.comment.label }}<br>
+                {{ form.comment(class="form-control") }}<br>
+                {% for error in form.comment.errors %}
+                    <p class="alert alert-danger" role="alert">
+                        {{ error }}
+                    </p>
+                {% endfor %}
+            </p>
+            <p>{{ form.submit(type="submit", class="btn btn-outline-primary") }}</p>
+            <div>{{ message }}</div>
+        </div>
+    </form>
+</div>
+{% endblock %}
